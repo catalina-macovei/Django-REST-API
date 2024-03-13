@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  djangoapp:
+    container_name: djangoapp
+    build: .
+    ports: 
+      - "8000:8000"
+    environment:
+      - PG_USER=hospital
+      - PG_PASSWORD=hospital
+      - PG_DB=hospital
+      - PG_HOST=db
+      - PG_PORT=5432
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: postgres:12
+    environment:
+      - POSTGRES_USER=hospital
+      - POSTGRES_PASSWORD=hospital
+      - POSTGRES_DB=hospital
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata: {}
